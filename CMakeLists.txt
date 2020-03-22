@@ -3,4 +3,6 @@ project(CoinChange2)
 
 set(CMAKE_CXX_STANDARD 20)
 
+set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -O3")
+
 add_executable(CoinChange2 main.cpp)

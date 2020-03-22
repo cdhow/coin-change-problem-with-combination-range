@@ -39,7 +39,7 @@ std::vector<int> sum_vectors(std::vector<int>::iterator it_1,
     return summed_vector;
 }
 
-int solve_coin_change(std::vector<int> &coins, const int &target, const int &min_comb, const int &max_comb) {
+long solve_coin_change(std::vector<int> &coins, const int &target, const int &min_comb, const int &max_comb) {
 
     // This 3D vector contains coins by 0-target by a vector that contains how many combinations there are for a certain
     // length where the indexes are the lengths and the value is how many combinations, an example is
@@ -80,7 +80,7 @@ int solve_coin_change(std::vector<int> &coins, const int &target, const int &min
     }
 
     // Get the combinations from length = min to length = max
-    int num_combinations = 0;
+    long num_combinations = 0;
     for (int i=min_comb; i<=max_comb; i++)
         num_combinations += table[coins.size()][target][i];
 
@@ -89,7 +89,7 @@ int solve_coin_change(std::vector<int> &coins, const int &target, const int &min
 }
 
 // This method is used to parse the input file and returns a list of tuples of the data in the format (target, min, max)
-std::list<std::tuple<int,int,int>> get_file_input(std::string &filename)
+std::list<std::tuple<int,int,int>> get_file_data(std::string &filename)
 {
     // List of tuples
     std::list<std::tuple<int,int,int>> data;
@@ -126,13 +126,12 @@ std::list<std::tuple<int,int,int>> get_file_input(std::string &filename)
     return data;
 }
 
+int main(int argc, char *argv[]) {
 
-int main() {
-
-    std::string filename = "input.txt";
+    std::string filename(argv[1]);
 
     // For each line of data in the file
-    for (auto data : get_file_input(filename))
+    for (auto data : get_file_data(filename))
     {
         // data values
         int amount = std::get<0>(data);
@@ -145,7 +144,7 @@ int main() {
         // Track algorithm run time
         auto startClock = std::chrono::high_resolution_clock::now();
 
-        int solution = solve_coin_change(primes, amount, min_c, max_c);
+        long solution = solve_coin_change(primes, amount, min_c, max_c);
 
         auto endClock = std::chrono::high_resolution_clock::now();
         double microseconds = std::chrono::duration_cast<std::chrono::microseconds> (endClock - startClock).count();
